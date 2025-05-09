@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuula Embed</title>
+    <style>
+        /* Estilos simples para garantir que o iframe ocupe toda a tela */
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .welcome-text {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-text">Bem-vindo ao tour virtual da casa X</div>
+    <iframe src="https://kuula.co/share/collection/71PB8?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1" 
+            frameborder="0" 
+            allow="xr-spatial-tracking; gyroscope; accelerometer" 
+            allowfullscreen 
+            scrolling="no">
+    </iframe>
+</body>
+</html>
