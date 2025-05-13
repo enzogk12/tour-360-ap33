@@ -114,7 +114,7 @@ header img {
 /* Aumentar altura no desktop */
 @media (min-width: 768px) {
   .iframe-wrapper iframe {
-    height: 800px; /* ajuste aqui a altura desejada no desktop */
+    height: 650px; /* ajuste aqui a altura desejada no desktop */
   }
 }
 
