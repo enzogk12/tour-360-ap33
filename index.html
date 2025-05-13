@@ -4,55 +4,8 @@
   <meta charset="UTF-8">
   <title>Tour Virtual</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
   <link rel="icon" href="https://raw.githubusercontent.com/enzogk12/tours-360/main/ER-tours.ico" type="image/x-icon">
-</head>
-<body>
-
-  <!-- Barra Lateral -->
-  <div class="sidebar">
-    <h2>Menu</h2>
-    <ul>
-      <li><a href="#" onclick="showPage('imoveis')">Ver Imóveis</a></li>
-      <li><a href="#" onclick="showPage('cadastro')">Cadastrar Imóvel</a></li>
-    </ul>
-  </div>
-
-  <!-- Conteúdo Principal -->
-  <div class="main-content">
-    <div id="imoveis" class="page">
-      <h2>Lista de Imóveis</h2>
-      <ul>
-        <li>Imóvel 1</li>
-        <li>Imóvel 2</li>
-        <li>Imóvel 3</li>
-        <!-- Aqui você pode listar dinamicamente os imóveis -->
-      </ul>
-    </div>
-
-    <div id="cadastro" class="page" style="display:none;">
-      <h2>Cadastrar Novo Imóvel</h2>
-      <form>
-        <label for="nome">Nome do Imóvel:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
-        <label for="descricao">Descrição:</label>
-        <textarea id="descricao" name="descricao" required></textarea><br><br>
-        <label for="preco">Preço:</label>
-        <input type="number" id="preco" name="preco" required><br><br>
-        <input type="submit" value="Cadastrar">
-      </form>
-    </div>
-  </div>
-
-  <script>
-    // Função para alternar entre as páginas
-    function showPage(page) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(p => p.style.display = 'none');  // Esconde todas as páginas
-      document.getElementById(page).style.display = 'block';  // Mostra a página selecionada
-    }
-  </script>
-
+  <link rel="stylesheet" href="style.css"> <!-- Se estiver usando um arquivo CSS externo -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -61,6 +14,7 @@
       margin: 0;
     }
 
+    /* Barra lateral */
     .sidebar {
       width: 250px;
       background-color: #333;
@@ -95,6 +49,7 @@
       display: block;
     }
 
+    /* Conteúdo principal */
     .main-content {
       margin-left: 250px;
       padding: 20px;
@@ -102,35 +57,196 @@
       overflow-y: auto;
     }
 
-    .page {
+    .welcome-text {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .photo-section {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .photo-section img {
+      width: 100%;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+
+    .button-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button {
+      background-color: #d3d3d3;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      width: 160px;
+    }
+
+    button:hover {
+      background-color: #bbb;
+    }
+
+    .iframe-wrapper {
+      width: 100%;
+      margin-top: 20px;
       display: none;
     }
 
-    /* Adicione estilos para o formulário */
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    input[type="text"], input[type="number"], textarea {
-      padding: 8px;
-      margin-bottom: 10px;
+    iframe {
       width: 100%;
-      font-size: 16px;
-    }
-
-    input[type="submit"] {
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
+      height: 500px;
       border: none;
-      cursor: pointer;
+      border-radius: 8px;
     }
 
-    input[type="submit"]:hover {
-      background-color: #45a049;
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button-section {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      button {
+        width: auto;
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+
+      .photo-section {
+        max-width: 100%;
+      }
     }
   </style>
+</head>
+<body>
+
+  <!-- Barra Lateral -->
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="#" onclick="showPage('imoveis')">Ver Imóveis</a></li>
+      <li><a href="#" onclick="showPage('cadastro')">Cadastrar Imóvel</a></li>
+      <li><a href="#" onclick="showPage('tour')">Tour Virtual</a></li>
+    </ul>
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <div class="main-content">
+    <!-- Texto de Boas-Vindas -->
+    <div class="welcome-text">
+      Bem-vindo ao tour virtual da casa
+    </div>
+
+    <!-- Página dos Imóveis -->
+    <div id="imoveis" class="page" style="display:none;">
+      <h2>Lista de Imóveis</h2>
+      <ul>
+        <li>Imóvel 1</li>
+        <li>Imóvel 2</li>
+        <li>Imóvel 3</li>
+        <!-- Você pode adicionar mais imóveis aqui ou puxar do banco de dados -->
+      </ul>
+    </div>
+
+    <!-- Página para Cadastrar Imóvel -->
+    <div id="cadastro" class="page" style="display:none;">
+      <h2>Cadastrar Novo Imóvel</h2>
+      <form>
+        <label for="nome">Nome do Imóvel:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" required></textarea><br><br>
+        <label for="preco">Preço:</label>
+        <input type="number" id="preco" name="preco" required><br><br>
+        <input type="submit" value="Cadastrar">
+      </form>
+    </div>
+
+    <!-- Página do Tour Virtual -->
+    <div id="tour" class="page">
+      <div class="container">
+        <!-- Galeria de Fotos -->
+        <div class="photo-section">
+          <img src="https://raw.githubusercontent.com/enzogk12/tours-360/main/ER-tours.png" alt="ER-tours">
+          <img src="https://via.placeholder.com/300x200" alt="Foto 2">
+          <img src="https://via.placeholder.com/300x200" alt="Foto 3">
+        </div>
+
+        <!-- Botões -->
+        <div class="button-section">
+          <button onclick="showTour('kuula')">TOUR 360</button>
+          <button onclick="showTour('street')">Google Street View</button>
+        </div>
+      </div>
+
+      <!-- Área de Iframes -->
+      <div class="iframe-wrapper" id="kuulaWrapper">
+        <iframe id="kuulaFrame" 
+                src="https://kuula.co/share/collection/71PB8?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
+                allow="xr-spatial-tracking; gyroscope; accelerometer"
+                allowfullscreen scrolling="no">
+        </iframe>
+      </div>
+
+      <div class="iframe-wrapper" id="streetWrapper">
+        <iframe id="streetFrame"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.6463504454878!2d-46.88449062403344!3d-23.58114166232036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf00968af10025%3A0x3a1683132326b34d!2sR.%20Mascarenhas%20Homem%2C%2056%20-%20S%C3%A3o%20Paulo%20II%2C%20Cotia%20-%20SP%2C%2006706-145!5e0!3m2!1spt-BR!2sbr!4v1747087579731!5m2!1spt-BR!2sbr"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Função para alternar entre as páginas
+    function showPage(page) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(p => p.style.display = 'none');  // Esconde todas as páginas
+      document.getElementById(page).style.display = 'block';  // Mostra a página selecionada
+    }
+
+    // Função para exibir o tour
+    function showTour(type) {
+      const kuula = document.getElementById("kuulaWrapper");
+      const street = document.getElementById("streetWrapper");
+
+      if (type === 'kuula') {
+        kuula.style.display = "block";
+        street.style.display = "none";
+      } else if (type === 'street') {
+        kuula.style.display = "none";
+        street.style.display = "block";
+      }
+    }
+  </script>
 
 </body>
 </html>
