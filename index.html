@@ -146,6 +146,24 @@
 </head>
 <body>
 
+    <div class="main-content">
+    <!-- Imóveis -->
+    <div id="imoveis" class="page" style="display:none;">
+      <!-- O conteúdo da página Imóveis vai aqui -->
+    </div>
+
+    <!-- Cadastro -->
+    <div id="cadastro" class="page" style="display:none;">
+      <!-- O conteúdo da página Cadastro vai aqui -->
+    </div>
+
+    <!-- Tour Virtual (sem display:none inline) -->
+    <div id="tour" class="page">
+      <!-- A sua galeria de fotos, botões e iframe do Tour 360 vai aqui -->
+    </div>
+  </div>
+
+
   <!-- Barra Lateral -->
   <div class="sidebar">
     <h2>Menu</h2>
@@ -224,28 +242,28 @@
       </div>
     </div>
   </div>
-
   <script>
-    // Função para alternar entre as páginas
+    // Alterna entre as páginas
     function showPage(page) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(p => p.style.display = 'none');  // Esconde todas as páginas
-      document.getElementById(page).style.display = 'block';  // Mostra a página selecionada
+      document.querySelectorAll('.page')
+              .forEach(p => p.style.display = 'none');
+      document.getElementById(page).style.display = 'block';
     }
 
-    // Função para exibir o tour
+    // Mostra o Tour 360 ou Street View dentro da página de Tour
     function showTour(type) {
       const kuula = document.getElementById("kuulaWrapper");
       const street = document.getElementById("streetWrapper");
-
-      if (type === 'kuula') {
-        kuula.style.display = "block";
-        street.style.display = "none";
-      } else if (type === 'street') {
-        kuula.style.display = "none";
-        street.style.display = "block";
-      }
+      kuula.style.display   = (type==='kuula') ? 'block' : 'none';
+      street.style.display  = (type==='street')? 'block' : 'none';
     }
+
+    // **Aqui mostramos a seção "tour" assim que a página carrega**
+    document.addEventListener('DOMContentLoaded', () => {
+      showPage('tour');
+    });
+  </script>
+
   </script>
 
 </body>
