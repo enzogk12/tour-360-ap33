@@ -3,128 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <title>Tour Virtual</title>
-  <link rel="icon" href="https://raw.githubusercontent.com/enzogk12/tours-360/main/ER-tours.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://raw.githubusercontent.com/enzogk12/tours-360/main/ER-tours.ico" type="image/x-icon">
 </head>
 <body>
-  <!-- O resto do conteúdo do site -->
-</body>
-</html>
 
-  
-  <!-- Cabeçalho com logo -->
-  <header>
-   <img src="https://raw.githubusercontent.com/enzogk12/tours-360/main/ER-tours.png" alt="Logo">
-
-  </header>
-
-  <!-- Botões de navegação -->
-  <div class="nav-buttons">
-    <button onclick="mostrarSecao('fotos')">Fotos</button>
-    <button onclick="mostrarSecao('kuula')">Tour 360</button>
-    <button onclick="mostrarSecao('street')">Google Street View</button>
+  <!-- Barra Lateral -->
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="#" onclick="showPage('imoveis')">Ver Imóveis</a></li>
+      <li><a href="#" onclick="showPage('cadastro')">Cadastrar Imóvel</a></li>
+    </ul>
   </div>
 
-  <!-- Galeria de fotos -->
-  <div class="gallery-container" id="fotosSection">
-    <div class="left-photo">
-      <img id="mainPhoto" src="" alt="Foto Principal">
-      <div class="main-caption" id="mainCaption"></div>
+  <!-- Conteúdo Principal -->
+  <div class="main-content">
+    <div id="imoveis" class="page">
+      <h2>Lista de Imóveis</h2>
+      <ul>
+        <li>Imóvel 1</li>
+        <li>Imóvel 2</li>
+        <li>Imóvel 3</li>
+        <!-- Aqui você pode listar dinamicamente os imóveis -->
+      </ul>
     </div>
-    <div class="right-photos"></div>
+
+    <div id="cadastro" class="page" style="display:none;">
+      <h2>Cadastrar Novo Imóvel</h2>
+      <form>
+        <label for="nome">Nome do Imóvel:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" required></textarea><br><br>
+        <label for="preco">Preço:</label>
+        <input type="number" id="preco" name="preco" required><br><br>
+        <input type="submit" value="Cadastrar">
+      </form>
+    </div>
   </div>
 
-  <!-- Tour 360 -->
-  <div class="iframe-wrapper" id="kuulaSection">
-    <iframe src="https://kuula.co/share/collection/71PB8?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
-            allow="xr-spatial-tracking; gyroscope; accelerometer"
-            allowfullscreen scrolling="no">
-    </iframe>
-  </div>
-
-  <!-- Google Street View -->
-  <div class="iframe-wrapper" id="streetSection">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.6463504454878!2d-46.88449062403344!3d-23.58114166232036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf00968af10025%3A0x3a1683132326b34d!2sR.%20Mascarenhas%20Homem%2C%2056%20-%20Cotia%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1747087579731!5m2!1spt-BR!2sbr"
-            allowfullscreen loading="lazy">
-    </iframe>
-  </div>
-
-  <!-- Scripts -->
   <script>
-    async function carregarFotos() {
-      const response = await fetch('fotos.json');
-      const fotos = await response.json();
-
-      const mainPhoto = document.getElementById('mainPhoto');
-      const mainCaption = document.getElementById('mainCaption');
-
-      mainPhoto.src = fotos[0].src;
-      mainPhoto.setAttribute('data-caption', fotos[0].caption);
-      mainCaption.textContent = fotos[0].caption;
-
-      const rightPhotos = document.querySelector('.right-photos');
-      rightPhotos.innerHTML = '';
-
-      for (let i = 1; i < fotos.length; i++) {
-        const thumbDiv = document.createElement('div');
-        thumbDiv.className = 'photo-thumb';
-
-        const img = document.createElement('img');
-        img.src = fotos[i].src;
-        img.alt = fotos[i].caption;
-        img.setAttribute('data-caption', fotos[i].caption);
-        img.onclick = () => trocarImagemPrincipal(img);
-
-        const caption = document.createElement('div');
-        caption.className = 'caption';
-        caption.textContent = fotos[i].caption;
-
-        const btn = document.createElement('button');
-        btn.textContent = "Colocar maior";
-        btn.onclick = () => trocarImagemPrincipal(img);
-
-        thumbDiv.appendChild(img);
-        thumbDiv.appendChild(caption);
-        thumbDiv.appendChild(btn);
-
-        rightPhotos.appendChild(thumbDiv);
-      }
+    // Função para alternar entre as páginas
+    function showPage(page) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(p => p.style.display = 'none');  // Esconde todas as páginas
+      document.getElementById(page).style.display = 'block';  // Mostra a página selecionada
     }
-
-    function trocarImagemPrincipal(imgElement) {
-      const main = document.getElementById("mainPhoto");
-      const mainCaption = document.getElementById("mainCaption");
-
-      main.style.opacity = 0;
-      setTimeout(() => {
-        const tempSrc = main.src;
-        const tempCaption = main.getAttribute('data-caption');
-
-        main.src = imgElement.src;
-        main.setAttribute('data-caption', imgElement.getAttribute('data-caption'));
-        mainCaption.textContent = imgElement.getAttribute('data-caption');
-
-        imgElement.src = tempSrc;
-        imgElement.setAttribute('data-caption', tempCaption);
-
-        main.style.opacity = 1;
-      }, 300);
-    }
-
-    function mostrarSecao(secao) {
-      document.getElementById('fotosSection').style.display = 'none';
-      document.getElementById('kuulaSection').style.display = 'none';
-      document.getElementById('streetSection').style.display = 'none';
-
-      if (secao === 'fotos') carregarFotos();
-      document.getElementById(secao + 'Section').style.display = 'flex';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      mostrarSecao('fotos');
-    });
   </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      position: fixed;
+      height: 100%;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #575757;
+      padding: 10px;
+      display: block;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 20px;
+      width: calc(100% - 250px);
+      overflow-y: auto;
+    }
+
+    .page {
+      display: none;
+    }
+
+    /* Adicione estilos para o formulário */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input[type="text"], input[type="number"], textarea {
+      padding: 8px;
+      margin-bottom: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    input[type="submit"] {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
 
 </body>
 </html>
