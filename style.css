@@ -99,7 +99,6 @@ header img {
   border: none;
   border-radius: 6px;
 }
-
 .iframe-wrapper {
   display: none;
   padding: 20px;
@@ -107,7 +106,15 @@ header img {
 
 .iframe-wrapper iframe {
   width: 100%;
-  height: 500px;
+  height: 500px; /* Altura padrão para celular */
   border-radius: 10px;
   border: none;
 }
+
+/* Aumentar altura no desktop */
+@media (min-width: 768px) {
+  .iframe-wrapper iframe {
+    height: 700px; /* ajuste aqui a altura desejada no desktop */
+  }
+}
+
